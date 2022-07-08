@@ -33,6 +33,7 @@ peer.on('connection', conn => {
         }
         else if(data.type == "winstate"){
             console.log("I lose")
+            alert("YOU LOSE  ")
             gameOver = true
         }
         else if(data.type == "answer"){
@@ -190,6 +191,7 @@ function checkWin(){
     if(opponentGrid.length == 0){
         console.log("You win!")
         gameOver = true
+        alert("YOU WIN")
         send({type: "winstate"})
     }
 }
@@ -214,7 +216,7 @@ function initGame(){
         area.addEventListener("click", () => {
             console.log(myTurn, myShipsPlaced, otherShipsPlaced, !gameOver)
             if(myTurn && myShipsPlaced && otherShipsPlaced && !gameOver){
-                if(area.className == "area"){
+                if(area.classList.contains("area")){
                     myTurn = !myTurn
                     
                     checkHit(index).then(msg => {
