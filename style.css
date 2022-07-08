@@ -1,0 +1,179 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html, #game, #home-page{
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+}
+
+#home-page h1{
+    font-size: 4rem;
+    text-align: center;
+}
+
+#options{
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#create-game{
+    text-align: center;
+    background-color: white;
+    line-height: 3rem;
+    cursor: pointer;
+    color: black;
+    font-size: 2rem;
+}
+
+#options span{
+    display: inline-block;
+    text-align: center;
+    color: white;
+    line-height: 3rem;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+input{
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+#inputId{
+    line-height: 2.5rem;
+}
+
+#options *{
+    border-radius: 5px;
+}
+
+#inputId, #options button{
+    width: 50%;
+    margin: 0 auto;
+}
+
+#options button{
+    margin-top: 1rem;
+    border: hidden;
+    line-height: 2rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+#game{
+    display: flex;
+    flex-direction: column;
+}
+
+#game h1{
+    margin: 0 4rem;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+}
+
+#return{
+    cursor: pointer;
+}
+
+#board-options{
+    display: flex;
+}
+
+#start{
+    margin-left: 50px;
+}
+
+#start, #reload{
+    cursor: pointer;
+}
+
+#game-container{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#board-grid{
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    height: 75vmin;
+    width: 75vmin;
+}
+
+.area{
+    border: 0.5px solid white;
+    cursor: pointer;
+    position: relative;
+}
+
+.hidden{
+    display: none !important;
+}
+
+.area::before{
+    position: absolute;
+    content: "";
+    height: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 50%;
+}
+
+.area.clientHit::before{
+    background-color: green;
+}
+
+.area.clientMiss::before{
+    background-color: white;
+}
+
+.area.peerHit::before{
+    background-color: red;
+}
+
+.area.peerMiss::before{
+    background-color: blue;
+}
+
+.area.ship{
+    background-color: gray !important;
+    border: 1px solid gray;
+}

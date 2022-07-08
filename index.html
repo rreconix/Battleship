@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/peerjs@1.4.5/dist/peerjs.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Battleship</title>
+</head>
+<body>
+
+    <div id="home-page">
+        <!--
+            <label for="user">Username:</label>
+            <input id="user" type="text" maxlength="20">
+
+        -->
+        
+        <div id="options">
+            <h1>BATTLESHIP</h1>
+            <div id="create-game">Create new game</div>
+            <span>or</span>
+            <input placeholder="Enter game code" type="number"oninput="this.value=this.value.slice(0,this.max)" max="5" id="inputId">
+            <button onclick="connect(this.parentNode.children[3].value)">CONNECT</button>
+        </div>
+    </div> 
+    
+    <div id="game" class="hidden">
+        <h1>
+            <div id="return">Back to homepage</div>
+            <div id="board-options">
+                <div id="reload">Generate new board</div>
+                <div id="start">Ready</div>
+            </div>
+            <div id="gameId"></div>
+        </h1>
+        <div id="game-container"></div>
+    </div>
+    
+    <script src="server.js"></script>
+</body>
+</html>
