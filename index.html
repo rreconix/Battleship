@@ -21,7 +21,7 @@
             <h1>BATTLESHIP</h1>
             <div id="create-game">Create new game</div>
             <span>or</span>
-            <input placeholder="Enter game code" type="number"oninput="this.value=this.value.slice(0,this.max)" max="5" id="inputId">
+            <input placeholder="Enter game code" type="number" oninput="this.value=this.value.slice(0,this.max)" max="6" id="inputId">
             <button id="connectButton">CONNECT</button>
         </div>
     </div> 
@@ -30,10 +30,10 @@
         <h1>
             <div id="return">Back to homepage</div>
             <div id="board-options">
-                <div id="reload">Generate new board</div>
                 <div id="start">Ready</div>
+                <div id="turn"></div>
             </div>
-            <div id="turn"></div>
+
             <div id="gameId"></div>
         </h1>
         <div id="game-container"></div>

@@ -127,24 +127,46 @@ input[type=number] {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    gap: 5%;
 }
 
-#board-grid{
+#ship_container{
+    display: grid;
+    justify-items: right;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 100px;
+}
+
+.ship{
+    background-color: white;
+    height: 3rem;
+    width: 3rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.board-grid{
     display: grid;
     grid-template-columns: repeat(var(--columns), 1fr);
-    height: 75vmin;
-    width: 75vmin;
+    aspect-ratio: 1;
+    width: 50vmin;
 }
+
 
 .area{
     border: 0.5px solid white;
     cursor: pointer;
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.area[class^="ship-"], .area[class*= 'ship-']{
+    background-color: gray;
+}
+
 
 .area .small{
     display: flex;
@@ -160,67 +182,10 @@ input[type=number] {
     display: none;
 }
 
-.small.clientHit{
-    background-color: green;
-}
-
-.small.clientMiss{
+.small.miss{
     background-color: white;
 }
 
-.small.peerHit{
+.small.hit{
     background-color: red;
-}
-
-.small.peerMiss{
-    background-color: blue;
-}
-
-.small.peerMiss.clientMiss{
-    background: linear-gradient(
-        to right,
-        blue 0%,
-        blue 50%,
-        white 0%,
-        white 50%
-    );
-}
-
-.small.peerMiss.clientHit{
-    background: linear-gradient(
-        to right,
-        blue 0%,
-        blue 50%,
-        green 0%,
-        green 50%
-    );
-}
-
-.small.peerHit.clientHit{
-    background: linear-gradient(
-        to right,
-        red 0%,
-        red 50%,
-        green 0%,
-        green 50%
-    );
-}
-
-/*never client on client or peer on peer*/
-
-.small.peerHit.clientMiss{
-    background: linear-gradient(
-        to right,
-        red 0%,
-        red 50%,
-        white 0%,
-        white 50%
-    );
-}
-
-
-
-.area.ship{
-    background-color: gray !important;
-    border: 1px solid gray;
 }
