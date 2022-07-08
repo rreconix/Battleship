@@ -34,8 +34,8 @@ peer.on('connection', conn => {
             myTurn = !myTurn
         }
         else if(data.type == "winstate"){
-            alert("YOU LOSE")
             gameOver = true
+            alert("YOU LOSE")
         }
         else if(data.type == "grid"){
             otherShipsPlaced = true
@@ -92,6 +92,8 @@ function createShips(){
     return ship_container
 }
 
+const gameId = document.getElementById("gameId");
+
 async function createBoard(){
 
     const size = 10
@@ -110,7 +112,7 @@ async function createBoard(){
     grid_two = document.getElementsByClassName("board-grid")[1].children
 
     //createBoats()
-    document.getElementById("gameId").textContent = "ID: " + connectionId
+    gameId.textContent = "ID: " + connectionId
 }
 
 
@@ -165,10 +167,12 @@ function move(direction){//get the new node items
     const newIndexes = indexes.map(num => num += direction) //changes the indexes to match new location
     const nodeList = newIndexes.map(num => grid_one[num])//converts back into node elements
 
-    if(checkList(newIndexes)){
-        currentShip = nodeList
-        currentPosition = newIndexes[0];
-        highlightNodes(currentShip, currentShipNumber);
+    if((Math.floor(indexes[0] / 10) === Math.floor(newIndexes[0] / 10)) || (indexes[0] % 10 == newIndexes[0] % 10)){
+        if(checkList(newIndexes)){
+            currentShip = nodeList
+            currentPosition = newIndexes[0];
+            highlightNodes(currentShip, currentShipNumber);
+        }
     }
     return
 }
@@ -291,7 +295,7 @@ function setGame(){
     else{
         alert("Ship(s) placed incorrectly")
     }
-       
+    
 }
 
 function reloadGame(){
@@ -320,4 +324,5 @@ function connect(id) {//html onclick
     myTurn = false;
     boardOptions.style.display = "flex"
     start();
+    gameId.textContent = ""
 }
