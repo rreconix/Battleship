@@ -7,7 +7,6 @@ const peer = new Peer(connectionId)
 let connection
 
 function send(data) {
-    console.log(connection)
     if (connection)
         connection.send(data);
 }
@@ -32,8 +31,7 @@ peer.on('connection', conn => {
             myTurn = !myTurn
         }
         else if(data.type == "winstate"){
-            console.log("I lose")
-            alert("YOU LOSE  ")
+            alert("YOU LOSE")
             gameOver = true
         }
         else if(data.type == "answer"){
@@ -51,16 +49,6 @@ peer.on('connection', conn => {
 
 })
 
-
-function connect(id) {//html onclick
-    
-    if (!connection) {
-        console.log(id)
-        connection = peer.connect(id);
-        myTurn = false;
-        start();
-    }
-}
 
 const boatLengths = [5, 4, 3, 3, 2];
 
@@ -189,10 +177,9 @@ async function createBoard(){
 
 function checkWin(){
     if(opponentGrid.length == 0){
-        console.log("You win!")
         gameOver = true
-        alert("YOU WIN")
         send({type: "winstate"})
+        alert("YOU WIN")
     }
 }
 
@@ -214,7 +201,6 @@ function checkHit(index){
 function initGame(){
     [...areas].forEach((area, index) => {
         area.addEventListener("click", () => {
-            console.log(myTurn, myShipsPlaced, otherShipsPlaced, !gameOver)
             if(myTurn && myShipsPlaced && otherShipsPlaced && !gameOver){
                 if(area.classList.contains("area")){
                     myTurn = !myTurn
@@ -251,7 +237,6 @@ async function setGame(){
         }
     })
     myShipsPlaced = true
-    console.log("placed my ships")
     send({ type: "answer", value: grid })
     
 }
@@ -262,3 +247,16 @@ document.getElementById("start").addEventListener("click", setGame)
 
 
 document.getElementById("create-game").addEventListener("click", start)
+
+document.getElementById("connectButton").addEventListener("click", () => {
+    const id = document.getElementById("inputId").value
+    if(id.length == 5){
+        connect(id)
+    }
+})
+
+function connect(id) {//html onclick
+    connection = peer.connect(id);
+    myTurn = false;
+    start();
+}
