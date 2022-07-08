@@ -321,6 +321,7 @@ function initGame(){
             currentShipNumber = index;
             if(!shipWithIndex(currentShipNumber)){
                 currentShip = [...grid_one].slice(0, ship.textContent)//creates the ship if there isnt one on the board
+                console.log(currentShip)
             }
             else{
                 currentShip = [...document.getElementsByClassName("ship-" + currentShipNumber)]//if there is an existing ship it finds it
