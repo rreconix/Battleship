@@ -247,7 +247,6 @@ let currentPosition = 0
 function move(direction){//get the new node items
     const indexes = currentShip.map(item => indexOfNode(grid_one, item))//converts the ship to indexes
     const newIndexes = indexes.map(num => num += direction) //changes the indexes to match new location
-    console.log(newIndexes)
     const nodeList = newIndexes.map(num => grid_one[num])//converts back into node elements
 
     if(checkList(newIndexes)){
@@ -258,23 +257,27 @@ function move(direction){//get the new node items
     return
 }
 
-let rotations = [10, -1, -10, 1]
-let rotation = 10;
+
+boats = [10, 10, 10, 10, 10];
+let rotations = [10, -1, -10, 1];
 
 function rotateShip(){
-    let indexRotation = rotations.indexOf(rotation);
+
+    let shipNum = [...currentShip[0].classList].filter(boatClass => boatClass.startsWith("ship-"))[0].slice(-1);
+
+    currentPosition = indexOfNode(grid_one, currentShip[0])
+    let indexRotation = rotations.indexOf(boats[shipNum]);
     if(indexRotation == rotations.length -1) indexRotation = -1 
 
     let newIndexes = [];
 
     for(let i = 0; i < currentShip.length; i++){
-        newIndexes.push(currentPosition + (i * rotation))
+        newIndexes.push(currentPosition + (i * boats[shipNum]))
     } 
 
     const nodeList = newIndexes.map(num => grid_one[num])
-    
     if(checkList(newIndexes)){
-        rotation = rotations[indexRotation + 1]
+        boats[shipNum] = rotations[indexRotation + 1]
         
         currentShip = nodeList
         highlightNodes(currentShip, currentShipNumber)
@@ -320,8 +323,7 @@ function initGame(){
         ship.addEventListener("click", () => {
             currentShipNumber = index;
             if(!shipWithIndex(currentShipNumber)){
-                currentShip = [...grid_one].slice(0, ship.textContent)//creates the ship if there isnt one on the board
-                console.log(currentShip)
+                currentShip = [...grid_one].slice(0, ship.textContent)//creates the ship if there isnt one on the board\
             }
             else{
                 currentShip = [...document.getElementsByClassName("ship-" + currentShipNumber)]//if there is an existing ship it finds it
