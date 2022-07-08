@@ -111,7 +111,7 @@ input[type=number] {
 }
 
 #board-options{
-    display: flex;
+    display: none;
 }
 
 #start{
@@ -141,37 +141,84 @@ input[type=number] {
     border: 0.5px solid white;
     cursor: pointer;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.area .small{
+    display: flex;
+    width: 50%;
+    height: 50%;
 }
 
 .hidden{
     display: none !important;
 }
 
-.area::before{
-    position: absolute;
-    content: "";
-    height: 50%;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    width: 50%;
+#turn{
+    display: none;
 }
 
-.area.clientHit::before{
+.small.clientHit{
     background-color: green;
 }
 
-.area.clientMiss::before{
+.small.clientMiss{
     background-color: white;
 }
 
-.area.peerHit::before{
+.small.peerHit{
     background-color: red;
 }
 
-.area.peerMiss::before{
+.small.peerMiss{
     background-color: blue;
 }
+
+.small.peerMiss.clientMiss{
+    background: linear-gradient(
+        to right,
+        blue 0%,
+        blue 50%,
+        white 0%,
+        white 50%
+    );
+}
+
+.small.peerMiss.clientHit{
+    background: linear-gradient(
+        to right,
+        blue 0%,
+        blue 50%,
+        green 0%,
+        green 50%
+    );
+}
+
+.small.peerHit.clientHit{
+    background: linear-gradient(
+        to right,
+        red 0%,
+        red 50%,
+        green 0%,
+        green 50%
+    );
+}
+
+/*never client on client or peer on peer*/
+
+.small.peerHit.clientMiss{
+    background: linear-gradient(
+        to right,
+        red 0%,
+        red 50%,
+        white 0%,
+        white 50%
+    );
+}
+
+
 
 .area.ship{
     background-color: gray !important;

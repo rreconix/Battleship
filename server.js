@@ -16,7 +16,8 @@ let otherShipsPlaced = false;
 let myShipsPlaced = false;
 let gameOver = false
 
-
+const boardOptions = document.getElementById("board-options");
+const turn = document.getElementById("turn");
 
 
 
@@ -25,9 +26,10 @@ let opponentGrid = [];
 peer.on('connection', conn => {
     conn.on('data', data => {
         if(data.type == "color"){
-            areas[data.index].classList.add("peer" + data.value)
+            areas[data.index].children[0].classList.add("peer" + data.value)
         }
         else if(data.type == "turn"){
+            document.getElementById("turn").textContent = "YOUR TURN";
             myTurn = !myTurn
         }
         else if(data.type == "winstate"){
@@ -43,6 +45,8 @@ peer.on('connection', conn => {
     
     conn.on('open', () => {
         if(!connection){
+            turn.textContent = "YOUR TURN"
+            boardOptions.style.display = "flex"
             connection = peer.connect(conn.peer)
         }
     })
@@ -58,7 +62,10 @@ function generateBoard(size){
 
     for(let i = 0; i < size * size; i++){
         const childCell = document.createElement("div")
+        const childChildCell = document.createElement("div")
+        childChildCell.className = "small"
         childCell.className = "area"
+        childCell.appendChild(childChildCell)
         parent.appendChild(childCell)
     }
 
@@ -184,7 +191,7 @@ function checkWin(){
 }
 
 function checkHit(index){
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         if(opponentGrid.includes(index)){
             const indexAt = opponentGrid.indexOf(index);
             opponentGrid.splice(indexAt, 1);
@@ -202,11 +209,19 @@ function initGame(){
     [...areas].forEach((area, index) => {
         area.addEventListener("click", () => {
             if(myTurn && myShipsPlaced && otherShipsPlaced && !gameOver){
-                if(area.classList.contains("area")){
+                if(
+                    area.className == "area" ||
+                    area.classList.contains("ship") ||
+                    area.classList.contains("peerMiss") || 
+                    area.classList.contains("peerHit")
+                ){
                     myTurn = !myTurn
-                    
+                    document.getElementById("turn").textContent = "";
+
                     checkHit(index).then(msg => {
-                        area.classList.add("client" + msg)
+                        const smallElement = area.children[0];
+                        smallElement.classList.add("client" + msg)
+
                         send({type: "color", index: index, value: msg})
                     })
 
@@ -229,7 +244,10 @@ function start(){
 }
 
 async function setGame(){
-    document.getElementById("board-options").style.display = 'none';
+    boardOptions.style.display = 'none';
+    
+    turn.style.display = 'block';
+    
     let grid = [];
     [...areas].forEach((ele, index) => {
         if(ele.classList.contains("ship")){
@@ -258,5 +276,6 @@ document.getElementById("connectButton").addEventListener("click", () => {
 function connect(id) {//html onclick
     connection = peer.connect(id);
     myTurn = false;
+    boardOptions.style.display = "flex"
     start();
 }
