@@ -55,93 +55,9 @@ peer.on('connection', conn => {
 const boatLengths = [5, 4, 3, 3, 2];
 
 
-
-
-// function isValid(list, number){
-//     if(
-//         list.every(num => (num < 100 && num > -1)) &&
-//         list.every(num => !areas[num].classList.contains("ship")) &&
-//         (
-//             Math.floor(list[0] / 10) == Math.floor(list[list.length] / 10) ||
-//             list[0] % 10 == list[list.length-1] % 10
-//         )
-//     ){
-//         return true
-//     }
-//     else{
-//         return false
-//     }
-// }
-
-// function generateList(index, length){
-//     const items = [1,-1, 10, -10]
-//     const randomDirection = items[Math.floor(Math.random()*items.length)];
-//     let indexes = [index];
-    
-//     for(let i = 1; i < length; i++){
-//         indexes.push(index + (i * randomDirection))
-//     }
-
-//     return indexes
-// }
-
-// function getIndexes(index, length, number){
-//     let counter = 0;
-//     let list;
-//     do {
-//         counter++
-//         if(counter >= 300){
-//             console.warn("Max call stack.")
-//             return "stop"
-//         }
-//         list = generateList(index, length);
-//     } while (!isValid(list, number));
-
-//     return list
-// }
-
-
 const home_page = document.getElementById("home-page")
 const game = document.getElementById("game")
 const game_container = document.getElementById("game-container");
-
-// function randomIndex(){
-//     const num = Math.floor(Math.random() * 99);
-
-//     if(areas[num].classList.contains("ship")){
-//         return randomIndex()
-//     }
-//     else return num
-// }
-
-
-
-// async function createBoats(){
-//     for(let i = 0; i < boatLengths.length; i++){
-//         const length = boatLengths[i];
-//         const index = randomIndex();
-//         const indexes = getIndexes(index, length, i);//array
-
-//         if(indexes == "stop"){
-//             reloadGame()
-//         }
-//         highlightIndexes(indexes, i)
-//     }
-// }
-
-// function highlightIndexes(indexes, number){
-
-//     for(const index of indexes){
-//         const square = areas[index];
-//         try{
-//             square.classList.add("ship", "ship-"+number)
-//         }
-//         catch{
-//             return
-//         }
-//     }
-
-// }
 
 function generateBoard(size){
     const parent = document.createElement("div")
