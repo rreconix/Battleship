@@ -39,6 +39,10 @@ body{
     flex-direction: column;
 }
 
+#gameId{
+    display: none;
+}
+
 #create-game{
     text-align: center;
     background-color: white;
@@ -113,7 +117,7 @@ input[type=number] {
     cursor: pointer;
 }
 
-#board-options{
+#start{
     display: none;
 }
 

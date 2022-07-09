@@ -17,9 +17,9 @@ let otherShipsPlaced = false;
 let myShipsPlaced = false;
 let gameOver = false
 
-const boardOptions = document.getElementById("board-options");
 const turn = document.getElementById("turn");
 
+const ready = document.getElementById("start")
 
 
 let opponentGrid = [];
@@ -46,7 +46,8 @@ peer.on('connection', conn => {
     conn.on('open', () => {
         if(!connection){
             turn.textContent = "YOUR TURN"
-            boardOptions.style.display = "flex"
+            ready.style.display = "flex"
+            gameId.style.display = "none"
             connection = peer.connect(conn.peer)
         }
     })
@@ -163,6 +164,7 @@ function checkList(nodelist){
 let currentPosition = 0
 
 function move(direction){//get the new node items
+    console.log(currentShip, direction, currentPosition)
     const indexes = currentShip.map(item => indexOfNode(grid_one, item))//converts the ship to indexes
     const newIndexes = indexes.map(num => num += direction) //changes the indexes to match new location
     const nodeList = newIndexes.map(num => grid_one[num])//converts back into node elements
@@ -256,7 +258,7 @@ function initGame(){
 
     document.addEventListener("keyup", e => {
         if(currentShip){
-            
+            console.log(currentShip)
             if(e.key.startsWith("Arrow")){
                 const direction = directions[e.keyCode - 37]
                 move(direction)
@@ -282,9 +284,11 @@ function setGame(){
     const ships = [...grid_one].filter(el => JSON.stringify(el.classList).includes("ship-"))
 
     if(ships.length === boatLengths.reduce((a, b) => a + b, 0)){
-        boardOptions.style.display = 'none';
+        ready.style.display = 'none';
         turn.style.display = 'block';
+        gameId.style.display = "none"
         
+
         let grid = ships.map(el => indexOfNode(grid_one, el))
         
         document.getElementById("ship_container").style.display = "none"
@@ -300,15 +304,15 @@ function setGame(){
 
 function reloadGame(){
     console.log("Reloading...")
-    start()
-    return
+    document.location.reload()
 }
 
-document.getElementById("return").addEventListener("click", start)
-document.getElementById("start").addEventListener("click", setGame)
-document.getElementById("create-game").addEventListener("click", start)
-
-
+document.getElementById("return").addEventListener("click", reloadGame)
+ready.addEventListener("click", setGame)
+document.getElementById("create-game").addEventListener("click", () => {
+    start()
+    gameId.style.display = "flex"
+})
 
 
 const inputId = document.getElementById("inputId");
@@ -322,7 +326,6 @@ document.getElementById("connectButton").addEventListener("click", () => {
 function connect(id) {//html onclick
     connection = peer.connect(id);
     myTurn = false;
-    boardOptions.style.display = "flex"
+    ready.style.display = "flex"
     start();
-    gameId.textContent = ""
 }
